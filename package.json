@@ -1,0 +1,9 @@
+{
+  "name": "svelte-app",
+  "version": "1.0.0",
+  "description": "A simple Svelte application",
+  "type": "module",
+  "dependencies": {
+    "svelte": "^5.30.1"
+  }
+}
