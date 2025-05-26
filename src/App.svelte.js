@@ -11,3 +11,13 @@ user = {
   name: "svelte",
   email: "",
 };
+
+let bool = $state(false);
+
+$effect(() => {
+  if (bool) {
+    console.log(name);
+  } else {
+    console.log("nothing");
+  }
+});
