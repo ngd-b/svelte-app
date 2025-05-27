@@ -1,5 +1,17 @@
 <script>
   let { name = $bindable(), children } = $props();
+
+  let divAttch = (element) => {
+    // DOM节点渲染后执行
+    console.log("divAttch", element);
+    $effect(() => {
+      element.textContent = name;
+    });
+
+    return () => {
+      // 卸载
+    };
+  };
 </script>
 
 <h3>Heloo User! receive {props.name}</h3>
@@ -8,12 +20,15 @@
   {@render children()}
 </div>
 
-<div>{@html content}</div>
+<div {@attach divAttch}>{@html content}</div>
 
 <style>
   .html-container :global {
     p {
       color: red;
+    }
+    h1 {
+      font-weight: normal;
     }
   }
 </style>
