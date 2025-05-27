@@ -37,8 +37,23 @@
       easing: params.easing || elasticInOut,
     };
   };
+
+  const onerror = (error, reset) => {
+    console.error("Error occurred:", error);
+    // 可以在这里处理错误
+    // 比如重置状态或显示错误信息
+  };
+
+  const handleResize = () => {
+    console.log("Window resized");
+    // 可以在这里处理窗口大小变化
+  };
 </script>
 
+<svelte:window onresize={handleResize} />
+<svelte:head>
+  <title>Svelte App</title>
+</svelte:head>
 <h1>
   <style>
     h1 {
@@ -106,6 +121,14 @@
 
 <User bind:name />
 <User bind:name={() => name, (val) => (name = val)} /> -->
+
+<svelte:boundary {onerror}>
+  <User bind:name />
+
+  {#snippet failed(error, reset)}
+    <button onclick={() => reset()}>Oops, Try again</button>
+  {/snippet}
+</svelte:boundary>
 
 <!-- input -->
 <input bind:value={name} defaultValue="hboot" />
