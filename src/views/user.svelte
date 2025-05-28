@@ -1,6 +1,10 @@
 <script>
   let { name = $bindable(), children } = $props();
 
+  let content = `<div>
+  <p>This is a paragraph</p>
+  <h1>This is a heading</h1>
+</div>`;
   let divAttch = (element) => {
     // DOM节点渲染后执行
     console.log("divAttch", element);
@@ -14,10 +18,10 @@
   };
 </script>
 
-<h3>Heloo User! receive {props.name}</h3>
+<h3>Heloo User! receive {name}</h3>
 
 <div>
-  {@render children()}
+  {@render children?.()}
 </div>
 
 <div {@attach divAttch}>{@html content}</div>

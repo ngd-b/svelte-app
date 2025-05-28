@@ -1,6 +1,6 @@
 <script>
   import { fade } from "svelte/transition";
-  // import User from "./views/user.svelte";
+  import User from "./views/user.svelte";
   import { elasticInOut } from "svelte/easing";
   import { flip } from "svelte/animate";
   let name = $state("world");
@@ -111,7 +111,7 @@
   {@render list(item)}
 {/each} -->
 
-<!-- <div bind:this={divRef}>
+<div bind:this={divRef}>
   {#snippet avatar(url)}
     <img src={url} alt="avatar" />
   {/snippet}
@@ -120,7 +120,7 @@
 </div>
 
 <User bind:name />
-<User bind:name={() => name, (val) => (name = val)} /> -->
+<User bind:name={() => name, (val) => (name = val)} />
 
 <svelte:boundary {onerror}>
   <User bind:name />
