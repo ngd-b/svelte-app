@@ -1,14 +1,32 @@
 <script>
   import { fade } from "svelte/transition";
   import User from "./views/user.svelte";
+  import Home from "./views/home.svelte";
   import { elasticInOut } from "svelte/easing";
   import { flip } from "svelte/animate";
+  import { setContext, onMount, tick } from "svelte";
+  import userContext from "./stores/userContext.svelte.js";
+
   let name = $state("world");
   let total = $state(10);
   let checked = $state(true);
   let names = $state([]);
   let files = $state();
+  let buttonPrimary = $state(["primary"]);
+  let userInfo = $state({
+    name: "svelte",
+  });
 
+  onMount(() => {
+    console.log("mounted");
+
+    return () => {
+      console.log("unmounted");
+    };
+  });
+  setContext("name", userInfo);
+  userContext.set(userInfo);
+  export const UserGlobal = userInfo;
   let divRef = null;
   // let welcome = $derived(`Good ${name}`);
   let welcome = $derived.by(() => `Good ${name}`);
@@ -16,10 +34,18 @@
   $effect(() => {
     console.log(divRef.getBoundingClientRect());
   });
+  $effect.pre(() => {
+    console.log("dom update");
+    tick().then(() => {
+      console.log("dom update done");
+    });
+  });
   $effect(() => {
     $inspect.trace();
     let timer = setInterval(() => {
       console.log(name);
+      names.push(name);
+      userInfo.name = "hboot";
     }, 1000);
 
     return () => {
@@ -66,8 +92,7 @@
   Hello {name},Svelte!
 </h1>
 <h2 style="font-size:26px;" style:color|important="red">{welcome}</h2>
-<!-- <button class:buttonPrimary onclick={() => (name = "hboot")}>change</button> -->
-
+<button class:buttonPrimary onclick={() => (name = "hboot")}>change</button>
 <!-- {#if total > 50}
   {#if name == "hboot"}
     <div
@@ -122,6 +147,11 @@
 <User bind:name />
 <User bind:name={() => name, (val) => (name = val)} />
 
+{#await import("./views/home.svelte")}
+  <p>load home component...</p>
+{:then { default: Home }}
+  <Home />
+{/await}
 <svelte:boundary {onerror}>
   <User bind:name />
 
