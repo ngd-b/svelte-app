@@ -1,7 +1,7 @@
 <script>
   import About from "./about.svelte";
   import userContext from "../stores/userContext.svelte.js";
-  import { userStore } from "../stores/userStore.svelte.js";
+  import { userStore, userName } from "../stores/userStore.svelte.js";
 
   let { name = $bindable(), children } = $props();
 
@@ -13,6 +13,8 @@
   $effect(() => {
     setTimeout(() => {
       userStore.name = "Admin";
+      //
+      //userName.set("Store Admin");
     }, 4 * 1000);
   });
   let content = `<div>
